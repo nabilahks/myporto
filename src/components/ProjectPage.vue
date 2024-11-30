@@ -66,7 +66,7 @@ export default {
           description: "A platform to visualize data interactively using Metabase, including creating custom dashboards and reports.",
           image: metabase,
           videoUrl: "https://www.youtube.com/watch?v=jFIKwOhHujA", // Example YouTube link
-          features: ["Wah", "Wuh", "Weh"],
+          features: ["Wah", "Wuh", "woh"],
           technology: ["Wah", "Wuh", "Weh"],
         },
         {
