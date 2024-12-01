@@ -16,7 +16,7 @@
 
     <!-- About Section -->
     <div class="content-container">
-      <section class="about" v-scroll-animation>
+      <section class="about" >
         <h2>
           About 
           <span class="about-name">
@@ -43,7 +43,7 @@
       </section>
 
       <!-- Skills Section -->
-      <section class="skills" v-scroll-animation>
+      <section class="skills" >
         <h2>
           My 
           <span class="about-name">
@@ -110,7 +110,7 @@
       </section>
 
       <!-- Projects Section -->
-      <section class="projects" v-scroll-animation>
+      <section class="projects" >
         <h2>
           My
           <span class="about-name">
@@ -124,14 +124,19 @@
             <div class="project-content">
               <h3>{{ project.title }}</h3>
               <p>{{ project.description }}</p>
-              <a :href="project.link" target="_blank" class="project-link">View Project</a>
+              <router-link 
+                v-if="project.link" 
+                :to="project.link" 
+                class="project-link">
+                View Project
+              </router-link>
             </div>
           </div>
         </div>
       </section>
 
       <!-- Contact Section -->
-      <section class="contact" v-scroll-animation>
+      <section class="contact" >
         <h2>
           Contact
           <span class="about-name">
@@ -199,41 +204,24 @@ export default {
           title: "Nearby Places App",
           image: nearby,
           description: "An application to explore and find nearby places with features like searching and categorizing locations.",
-          link: "https://example.com/academy",
+          link: "/project",
         },
         {
           id: 2,
           title: "Search Recipe App",
           image: recipe,
           description: "A web application to search and explore recipes, complete with detailed instructions and ingredient lists.",
-          link: "https://example.com/devshop",
+          link: "/project",
         },
         {
           id: 3,
           title: "Visualisasi using Metabase",
           image: metabase,
           description: "A platform to visualize data interactively using Metabase, including creating custom dashboards and reports.",
-          link: "https://example.com/journal",
+          link: "/project",
         },
       ],
     };
-  },
-  directives: {
-    scrollAnimation: {
-      mounted(el) {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("active");
-              }
-            });
-          },
-          { threshold: 0.1 } // Aktifkan animasi saat 10% elemen terlihat
-        );
-        observer.observe(el);
-      },
-    },
   },
 };
 </script>
@@ -315,6 +303,7 @@ export default {
 
 .about h2 span {
   color: #4caf50;
+  position: relative;
 }
 
 .about-content {
@@ -343,6 +332,7 @@ export default {
 
 .skills h2 span {
   color: #4caf50;
+  position: relative;
 }
 
 .skills-grid {
@@ -380,6 +370,7 @@ export default {
 
 .projects h2 span {
   color: #4caf50;
+  position: relative;
 }
 
 .projects-grid {
@@ -438,6 +429,7 @@ export default {
 
 .contact h2 span {
   color: #4caf50;
+  position: relative;
 }
 
 .contact-content {
@@ -487,6 +479,7 @@ export default {
 /* Special Underline */
 .special-underline {
   border-top: 4px solid white;
+  position: absolute;
   position: absolute;
   right: 0;
   bottom: -40px;
