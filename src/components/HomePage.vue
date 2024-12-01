@@ -239,6 +239,12 @@ export default {
   margin: 0 50px;
 }
 
+@media (max-width: 1024px) {
+  .home {
+    margin: 0 30px;
+  }
+}
+
 .content-container {
   margin: 0 200px;
 }
@@ -336,15 +342,19 @@ export default {
 }
 
 .skills-grid {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-  margin-top: 50px;
+}
+
+@media (max-width: 1024px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .skill {
-  background-color: #e0f2f1; /* Warna hijau muda yang lembut */
+  background-color: #e0f2f1;
   padding: 20px;
   border-radius: 10px;
   font-weight: 500;
