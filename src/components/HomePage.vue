@@ -16,7 +16,7 @@
 
     <!-- About Section -->
     <div class="content-container">
-      <section class="about">
+      <section class="about" v-scroll-animation>
         <h2>
           About 
           <span class="about-name">
@@ -43,7 +43,7 @@
       </section>
 
       <!-- Skills Section -->
-      <section class="skills">
+      <section class="skills" v-scroll-animation>
         <h2>
           My 
           <span class="about-name">
@@ -110,7 +110,7 @@
       </section>
 
       <!-- Projects Section -->
-      <section class="projects">
+      <section class="projects" v-scroll-animation>
         <h2>
           My
           <span class="about-name">
@@ -131,7 +131,7 @@
       </section>
 
       <!-- Contact Section -->
-      <section class="contact">
+      <section class="contact" v-scroll-animation>
         <h2>
           Contact
           <span class="about-name">
@@ -218,6 +218,23 @@ export default {
       ],
     };
   },
+  directives: {
+    scrollAnimation: {
+      mounted(el) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("active");
+              }
+            });
+          },
+          { threshold: 0.1 } // Aktifkan animasi saat 10% elemen terlihat
+        );
+        observer.observe(el);
+      },
+    },
+  },
 };
 </script>
 
@@ -225,10 +242,11 @@ export default {
 /* Import Google Fonts untuk tampilan modern */
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap");
 
+/* Global Styles */
 .home {
   font-family: "Rubik", sans-serif;
   padding: 20px;
-  background-color: #ffffff; 
+  background-color: #ffffff;
   color: #2f4f4f;
   margin: 0 50px;
 }
@@ -249,14 +267,14 @@ export default {
   font-size: 3.5rem;
   font-weight: 700;
   color: #2f4f4f;
-  margin: 0
+  margin: 0;
 }
 
 .hero-content h2 {
   font-size: 7rem;
   color: #4caf50;
   margin: 0;
-  letter-spacing: -.025em;
+  letter-spacing: -0.025em;
   line-height: 1;
 }
 
@@ -265,8 +283,9 @@ export default {
   margin-bottom: 20px;
 }
 
-.about-name {
-  position: relative;
+.hero-image img {
+  width: 400px;
+  height: auto;
 }
 
 .contact-btn {
@@ -281,11 +300,6 @@ export default {
 
 .contact-btn:hover {
   background-color: #388e3c; /* Hijau lebih gelap untuk hover */
-}
-
-.hero-image img {
-  width: 400px;
-  height: auto;
 }
 
 /* About Section */
@@ -310,34 +324,10 @@ export default {
   flex-direction: row;
   align-items: center;
 }
+
 .about-image img {
   width: 400px;
   height: auto;
-}
-
-.skill img {
-  width: 50px;
-  height: auto;
-  margin: 5px;
-}
-
-.cv-buttons {
-  margin-top: 20px;
-}
-
-.cv-btn {
-  background-color: #4caf50;
-  color: #fff;
-  padding: 10px 15px;
-  margin: 5px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.cv-btn:hover {
-  background-color: #388e3c;
 }
 
 /* Skills Section */
@@ -369,6 +359,12 @@ export default {
   border-radius: 10px;
   font-weight: 500;
   color: #2f4f4f;
+}
+
+.skill img {
+  width: 50px;
+  height: auto;
+  margin: 5px;
 }
 
 /* Projects Section */
@@ -457,11 +453,7 @@ export default {
   justify-content: center;
 }
 
-.contact-item i {
-  font-size: 1.7rem;
-}
-
-.contact-item { 
+.contact-item {
   padding: 20px;
   margin: 0 10px;
   display: flex;
@@ -469,15 +461,32 @@ export default {
   color: #2f4f4f;
   border: 2px solid #2f4f4f;
   border-radius: 50%;
+  transition: border 0.3s;
 }
 
-.contact-item:hover { 
+.contact-item:hover {
   border: 2px dotted #2f4f4f;
 }
 
+.contact-item i {
+  font-size: 1.7rem;
+}
+
+/* Efek Animasi */
+.animate {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.animate.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Special Underline */
 .special-underline {
   border-top: 4px solid white;
-  position: absolute;
   position: absolute;
   right: 0;
   bottom: -40px;
@@ -487,4 +496,62 @@ export default {
   border-top: 4px solid #d0ceb4;
   border-radius: 90% / 100% 50%;
 }
+
+/* CV Buttons */
+.cv-buttons {
+  margin-top: 20px;
+}
+
+.cv-btn {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.cv-btn:hover {
+  background-color: #388e3c;
+}
+
+@media (max-width: 768px) {
+  /* Styles untuk tablet di sini */
+  .hero {
+    flex-direction: column !important;
+  }
+  .hero-content h2 {
+    font-size: 4rem;
+  }
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  .hero-content p {
+    font-size: 0.9rem;
+  }
+  .hero-image img {
+    width: 300px;
+  }
+  .content-container {
+    margin: 0;
+  }
+  .about-content {
+    flex-direction: column;
+  }
+  p {
+    font-size: 0.9rem;
+  }
+  .about-image img {
+    width: 300px;
+  }
+  .skill {
+    font-size: 0.9rem;
+  }
+  .contact-item {
+    padding: 10px;
+  }
+}
+
 </style>
