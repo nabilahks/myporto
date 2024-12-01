@@ -1,13 +1,13 @@
 <template>
   <div class="home">
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero lazy">
       <div class="hero-content">
         <h1>I'm Nabilah</h1>
         <h2>Front End</h2>
         <h2>Developer</h2>
         <p>I love being a Front End developer. I focus on building not only visually appealing interfaces but also creating user experiences that simplify and improve people's daily lives.</p>
-        <button class="contact-btn">Contact me</button>
+        <a href="mailto:your-email@example.com" class="contact-btn">Contact me</a>
       </div>
       <div class="hero-image">
         <img :src="heroImage" alt="Hero Illustration" />
@@ -16,7 +16,7 @@
 
     <!-- About Section -->
     <div class="content-container">
-      <section class="about" >
+      <section class="about lazy" >
         <h2>
           About 
           <span class="about-name">
@@ -43,7 +43,7 @@
       </section>
 
       <!-- Skills Section -->
-      <section class="skills" >
+      <section class="skills lazy" >
         <h2>
           My 
           <span class="about-name">
@@ -51,7 +51,7 @@
             <div class="special-underline"></div>
           </span>
         </h2>
-        <div class="skills-grid">
+        <div class="skills-grid ">
           <div class="skill">
             <div class="skill-image">
               <img :src="vanilla" alt="my self" />
@@ -110,7 +110,7 @@
       </section>
 
       <!-- Projects Section -->
-      <section class="projects" >
+      <section class="projects lazy" >
         <h2>
           My
           <span class="about-name">
@@ -136,7 +136,7 @@
       </section>
 
       <!-- Contact Section -->
-      <section class="contact" >
+      <section class="contact lazy" >
         <h2>
           Contact
           <span class="about-name">
@@ -155,7 +155,7 @@
             <a href="https://linkedin.com/in/nabilahksunarto" target="_blank" class="contact-item">
               <i class="fab fa-linkedin"></i>
             </a>
-            <a href="https://github.com/nabilahksunarto" target="_blank" class="contact-item">
+            <a href="https://github.com/nabilahks" target="_blank" class="contact-item">
               <i class="fab fa-github"></i>
             </a>
           </div>
@@ -223,6 +223,27 @@ export default {
       ],
     };
   },
+  mounted() {
+    // Menggunakan Intersection Observer
+    const lazySections = document.querySelectorAll(".lazy");
+    const observerOptions = {
+      root: null, // viewport
+      threshold: 0.1, // elemen terlihat 10% di viewport
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show"); // Tambahkan kelas show
+          observer.unobserve(entry.target); // Stop observasi setelah terlihat
+        }
+      });
+    }, observerOptions);
+
+    lazySections.forEach((section) => {
+      observer.observe(section);
+    });
+  },
 };
 </script>
 
@@ -252,7 +273,7 @@ export default {
 /* Hero Section */
 .hero {
   align-items: center;
-  padding: 50px 0;
+  padding: 100px 0 50px;
   display: flex;
   flex-direction: row;
 }
@@ -370,7 +391,7 @@ export default {
 /* Projects Section */
 .projects {
   text-align: center;
-  padding: 50px 0;
+  padding: 70px 0;
 }
 
 .projects h2 {
@@ -477,7 +498,7 @@ export default {
 /* Efek Animasi */
 .animate {
   opacity: 0;
-  transform: translateY(50px);
+  transform: translateY(100px);
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
@@ -519,6 +540,19 @@ export default {
 .cv-btn:hover {
   background-color: #388e3c;
 }
+
+/* Efek Lazy Scroll */
+.lazy {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.lazy.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 
 @media (max-width: 768px) {
   /* Styles untuk tablet di sini */
